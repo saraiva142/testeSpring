@@ -1,5 +1,6 @@
 package com.joao.testeSpring.controller;
 
+import com.joao.testeSpring.domain.User;
 import com.joao.testeSpring.service.HelloWorldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +18,15 @@ public class HelloWorldController {
     public String helloWorld() {
         return helloWorldService.helloWorld("Joao");
     }
-    @PostMapping("/test")
+    /*
+     @PostMapping("/test")
     public String test() {
         return "s";
+    }
+    */
+
+    @PostMapping("/{id}")
+    public String helloWorldPost(@PathVariable("id") String id, @RequestParam(value = "filter", defaultValue = "nenhum") String filter, @RequestBody User body) {
+        return "Hello Posting " + filter;
     }
 }
