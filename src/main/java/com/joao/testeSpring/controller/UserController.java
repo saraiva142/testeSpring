@@ -18,6 +18,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    // Construtor para injeção de dependência, pois como userService está private, é necessário usar o construtor para injetar a dependência
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
     @GetMapping("/{name}")
     public ResponseEntity<User> getUser(@PathVariable String name) {
         User user = userService.findUserByName(name);
