@@ -22,6 +22,23 @@ class HelloWorldServiceTest {
         assertEquals("Nome não Informado", result);
     }
 
+    @Test
+    void testHelloWorldNull() {
+        HelloWorldService service = new HelloWorldService();
+        String result = service.helloWorld(null);
+        assertEquals("Nome não Informado", result);
+    }
+
+    @Test
+    void testHelloWorldError() {
+        HelloWorldService service = new HelloWorldService();
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            service.helloWorld("erro");
+        });
+        assertEquals("Nome inválido", exception.getMessage());
+    }
+
+
 //    Testar o controller para diferentes parâmetros e corpo de requisição -body.
 
     @Test
