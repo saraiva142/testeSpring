@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 public class HelloWorldService {
     public String helloWorld(String name) {
         if (name == null || name.isEmpty()){
-            return "Nome não informado";
+            return "Nome não Informado";
         }
         if ("erro".equalsIgnoreCase(name)) {
             throw new IllegalArgumentException(("Nome inválido"));

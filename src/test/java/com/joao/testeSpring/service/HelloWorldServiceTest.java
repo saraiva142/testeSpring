@@ -19,7 +19,7 @@ class HelloWorldServiceTest {
     void testHelloWorldEmpty() {
         HelloWorldService service = new HelloWorldService();
         String result = service.helloWorld("");
-        assertEquals("Nome não informado", result);
+        assertEquals("Nome não Informado", result);
     }
 
 //    Testar o controller para diferentes parâmetros e corpo de requisição -body.
