@@ -19,6 +19,10 @@ public class UserService {
     public UserService(){
         users.put("joao", new User("Joao", "joao@email.com"));
         users.put("maria", new User("Maria", "maria@email.com"));
+        users.put("thiago", new User("Thiago", "thiago@email.com"));
+        users.put("fulano", new User("Fulano", "fulano@email.com"));
+        users.put("marcos", new User("Marcos", "marcos@email.com"));
+        users.put("eduarda", new User("Eduarda", "eduarda@email.com"));
     }
 
     public User findUserByName(String name) {

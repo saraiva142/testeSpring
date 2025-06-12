@@ -40,7 +40,7 @@ class UserServiceTest {
     void testListAllUsers() {
         UserService userService = new UserService();
         assertFalse(userService.listAllUsers().isEmpty());
-        assertEquals(2, userService.listAllUsers().size());
+        assertEquals(6, userService.listAllUsers().size());
     }
 
 }
