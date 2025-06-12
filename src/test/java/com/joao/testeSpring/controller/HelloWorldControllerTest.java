@@ -2,6 +2,7 @@ package com.joao.testeSpring.controller;
 
 import com.joao.testeSpring.domain.User;
 import com.joao.testeSpring.service.HelloWorldService;
+import com.joao.testeSpring.service.UserService;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -64,6 +65,25 @@ class HelloWorldControllerTest {
         User user = new User("Ciclano", "ciclano@email.com");
         String result = controller.helloWorldPost("0321", "nenhum", user);
         assertEquals("Você não passou nada no filtro, então ele está com 'nenhum'", result);
+    }
+
+    @Test
+    void testHelloWorldReverse() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("arara", "arara@email.com");
+        String result = controller.reverseUserName(user);
+        assertEquals("Nome invertido: arara (5 caracteres)", result);
     }
 
 }

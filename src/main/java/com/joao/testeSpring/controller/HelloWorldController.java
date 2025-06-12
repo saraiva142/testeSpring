@@ -2,6 +2,7 @@ package com.joao.testeSpring.controller;
 
 import com.joao.testeSpring.domain.User;
 import com.joao.testeSpring.service.HelloWorldService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -43,6 +44,14 @@ public class HelloWorldController {
             return "Você não passou nada no filtro, então ele está com 'nenhum'";
         }
         return "Hello Post " + filter + " para " + body.getName();
+    }
+
+
+    @PostMapping("/reverse")
+    public String reverseUserName(@RequestBody @NotNull User user) {
+        String reversed = new StringBuilder(user.getName()).reverse().toString();
+        int lenght = user.getName().length();
+        return "Nome invertido: " + reversed + " (" + lenght + " caracteres)";
     }
 
 }
