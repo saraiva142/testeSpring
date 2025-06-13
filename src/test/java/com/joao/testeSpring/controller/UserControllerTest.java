@@ -39,7 +39,7 @@ class UserControllerTest {
     }
 
     @Test
-    @DisplayName("Deve retornar 404 se não encontrar o usuário")
+    @DisplayName("Deve retornar 404 se não encontrar o usuario")
     void testUserNotFound() {
 
         //Criar um mock do UserService.
