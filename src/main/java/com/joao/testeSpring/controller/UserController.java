@@ -37,4 +37,15 @@ public class UserController {
         return userService.listAllUsers();
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
+        List<User> users = userService.listAllUsers();
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(email)) {
+                return ResponseEntity.ok(user);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

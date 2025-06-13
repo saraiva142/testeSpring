@@ -3,6 +3,7 @@ package com.joao.testeSpring.controller;
 import com.joao.testeSpring.domain.User;
 import com.joao.testeSpring.service.HelloWorldService;
 import com.joao.testeSpring.service.UserService;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,6 +12,7 @@ import static org.mockito.Mockito.*;
 class HelloWorldControllerTest {
 
     @Test
+    @DisplayName("Deve retornar bloqueado")
     void testeHelloWorldFilterBlock(){
         HelloWorldService serviceMock = mock(HelloWorldService.class);
         HelloWorldController controller = new HelloWorldController();
@@ -30,6 +32,7 @@ class HelloWorldControllerTest {
     }
 
     @Test
+    @DisplayName("Deve retornar mensagem de erro")
     void testHelloWorldFilterError(){
         HelloWorldService serviceMock = mock(HelloWorldService.class);
         HelloWorldController controller = new HelloWorldController();
@@ -49,6 +52,7 @@ class HelloWorldControllerTest {
     }
 
     @Test
+    @DisplayName("Deve retornar que não passou filtro")
     void testHelloWorldFilterEmpty() {
         HelloWorldService serviceMock = mock(HelloWorldService.class);
         HelloWorldController controller = new HelloWorldController();
@@ -68,6 +72,7 @@ class HelloWorldControllerTest {
     }
 
     @Test
+    @DisplayName("Deve retornar no invertido e qtd de caracteres")
     void testHelloWorldReverse() {
         HelloWorldService serviceMock = mock(HelloWorldService.class);
         HelloWorldController controller = new HelloWorldController();

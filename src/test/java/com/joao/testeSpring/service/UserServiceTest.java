@@ -1,6 +1,7 @@
 package com.joao.testeSpring.service;
 
 import com.joao.testeSpring.domain.User;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -12,6 +13,7 @@ class UserServiceTest {
 //    Listar todos os usuários.
 
     @Test
+    @DisplayName("Deve retornar o usuário")
     void testFindExistingUser() {
         UserService userService = new UserService();
         User user = userService.findUserByName("maria");
@@ -20,6 +22,7 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Deve retornar null, pois não existe usuário")
     void testFindNonExistingUser() {
         UserService userService = new UserService();
         User user = userService.findUserByName("pedro");
@@ -28,6 +31,7 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Deve retornar que o nome não é válido")
     void testFindUserWithInvalidName() {
         UserService userService = new UserService();
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
@@ -37,10 +41,11 @@ class UserServiceTest {
     }
 
     @Test
+    @DisplayName("Deve retornanar quantos usuários existem")
     void testListAllUsers() {
         UserService userService = new UserService();
         assertFalse(userService.listAllUsers().isEmpty());
-        assertEquals(6, userService.listAllUsers().size());
+        assertEquals(36, userService.listAllUsers().size());
     }
 
 }
