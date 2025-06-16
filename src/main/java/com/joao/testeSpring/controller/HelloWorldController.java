@@ -4,6 +4,7 @@ import com.joao.testeSpring.domain.User;
 import com.joao.testeSpring.service.HelloWorldService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,14 @@ public class HelloWorldController {
         String reversed = new StringBuilder(user.getName()).reverse().toString();
         int lenght = user.getName().length();
         return "Nome invertido: " + reversed + " (" + lenght + " caracteres)";
+    }
+
+    @PostMapping("/wellcome")
+    public ResponseEntity<String> welcomeUser(@RequestBody User user) {
+        if (user == null || user.getName() == null) {
+            return ResponseEntity.badRequest().body("Usuário invalido !");
+        }
+        return ResponseEntity.ok("Bem vindo, " + user.getName() + " !");
     }
 
 }
