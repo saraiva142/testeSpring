@@ -63,4 +63,46 @@ public class HelloWorldController {
         return ResponseEntity.ok("Bem vindo, " + user.getName() + " !");
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        if (user == null){
+            return ResponseEntity.badRequest().body("Usuário não informado !");
+        }
+        if (user.getName() == null || user.getName().isBlank()) {
+            return ResponseEntity.badRequest().body("Nome obrigatório !");
+        }
+        if (user.getName().matches(".*\\d.*")) {
+            return ResponseEntity.badRequest().body("Nome não pode conter números !");
+        }
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
+            return ResponseEntity.badRequest().body("E-mail obrigatório !");
+        }
+        if (!user.getEmail().contains("@") || user.getEmail().split("@").length != 2) {
+            return ResponseEntity.badRequest().body("E-mail inválido !");
+        }
+        return ResponseEntity.ok("Usuário " + user.getName() + " cadastrado com sucesso !");
+    }
+
+    @PostMapping("/personalize-wellcome")
+    public ResponseEntity<String> personalizeWellcome(@RequestBody User user) {
+        if (user == null || user.getName() == null || user.getName().isBlank()) {
+            return ResponseEntity.badRequest().body("Ops! Não consigo te dar as boas-vindas sem um nome.");
+        }
+
+        String name = user.getName().trim();
+        int nameLength = name.length();
+        String wellcomeMessage;
+
+        if (name.length() <= 4) {
+            wellcomeMessage = "E aí, " + name + "! Que bom te ver por aqui! Prepara-se para a aventura!";
+        } else if (nameLength <= 8) {
+            wellcomeMessage = "Olá, " + name + " O universo te espera seu otário!";
+        } else {
+            wellcomeMessage = "Salve, " + name + "! Saiba que nunca é tarde para desistir!";
+        }
+
+        return ResponseEntity.ok(wellcomeMessage);
+    }
+
+
 }

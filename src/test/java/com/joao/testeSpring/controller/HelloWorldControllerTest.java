@@ -193,4 +193,306 @@ class HelloWorldControllerTest {
         assertEquals("Usuário invalido !", result);
     }
 
+    @Test
+    @DisplayName("Deve retornar Usuário Cadastrado Register")
+    void testUserRegisterOk() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("sapo", "sapo@email.com");
+        String result = controller.registerUser(user).getBody();
+        assertEquals("Usuário sapo cadastrado com sucesso !", result);
+    }
+
+    @Test
+    @DisplayName("Usuário Não Informado")
+    void testUserIsNull() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        String result = controller.registerUser(null).getBody();
+        assertEquals("Usuário não informado !", result);
+    }
+
+    @Test
+    @DisplayName("Nome do usuário null")
+    void testNameUserIsNull() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User(null, "email@email");
+        String result = controller.registerUser(user).getBody();
+        assertEquals("Nome obrigatório !", result);
+    }
+
+    @Test
+    @DisplayName("Nome do usuário vazio")
+    void testNameUserIsBlank() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("", "email@email");
+        String result = controller.registerUser(user).getBody();
+        assertEquals("Nome obrigatório !", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar que não pode usar números no nome")
+    void testNameNumber() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("joo12", "joo@email.com");
+        String result = controller.registerUser(user).getBody();
+        assertEquals("Nome não pode conter números !", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar que o e-mail está nulo!")
+    void testEmaisIsNull() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("joão", null);
+        String result = controller.registerUser(user).getBody();
+        assertEquals("E-mail obrigatório !", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar que o e-mail está vazio!")
+    void testEmaisIsEmpty() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("joão", "");
+        String result = controller.registerUser(user).getBody();
+        assertEquals("E-mail obrigatório !", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro do email sem @")
+    void testEmailWithoutAt() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("joao", "joao_email.com");
+        String result = controller.registerUser(user).getBody();
+        assertEquals("E-mail inválido !", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar erro do email com mais de um @")
+    void testEmailWithMultipleAt() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("joao", "joao@@email.com");
+        String result = controller.registerUser(user).getBody();
+        assertEquals("E-mail inválido !", result);
+
+    }
+
+    @Test
+    @DisplayName("Deve retornar mensagem personalizada de boas-vindas nome <= 4")
+    void testPersonalizeWellcomeOkFourLenght() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("saa", "saraiva@email.com");
+        String result = controller.personalizeWellcome(user).getBody();
+        assertEquals("E aí, saa! Que bom te ver por aqui! Prepara-se para a aventura!", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar mensagem personalizada de boas-vindas nome nameLength <= 8")
+    void testPersonalizeWellcomeOkEigthLenght() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("saraiva", "saraiva@email.com");
+        String result = controller.personalizeWellcome(user).getBody();
+        assertEquals("Olá, saraiva O universo te espera seu otário!", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar mensagem personalizada de boas-vindas nome maior que 8")
+    void testPersonalizeWellcomeOkMoreThenEight() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("umdoistres", "saraiva@email.com");
+        String result = controller.personalizeWellcome(user).getBody();
+        assertEquals("Salve, umdoistres! Saiba que nunca é tarde para desistir!", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar nome nulo!")
+    void testNameIsNullPersonalize() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User(null, "nulo@email.com");
+        String result = controller.personalizeWellcome(user).getBody();
+        assertEquals("Ops! Não consigo te dar as boas-vindas sem um nome.", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar nome vazio!")
+    void testNameIsEmptyPersonalize() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        User user = new User("", "nulo@email.com");
+        String result = controller.personalizeWellcome(user).getBody();
+        assertEquals("Ops! Não consigo te dar as boas-vindas sem um nome.", result);
+    }
+
+    @Test
+    @DisplayName("Deve retornar usuário nulo")
+    void testUserIsNullPersonalizer() {
+        HelloWorldService serviceMock = mock(HelloWorldService.class);
+        HelloWorldController controller = new HelloWorldController();
+
+        java.lang.reflect.Field field;
+        try {
+            field = HelloWorldController.class.getDeclaredField("helloWorldService");
+            field.setAccessible(true);
+            field.set(controller, serviceMock);
+        } catch (Exception e) {
+            fail("Erro ao injetar mock: " + e.getMessage());
+        }
+
+        String result = controller.personalizeWellcome(null).getBody();
+        assertEquals("Ops! Não consigo te dar as boas-vindas sem um nome.", result);
+
+    }
+
+
+
 }
